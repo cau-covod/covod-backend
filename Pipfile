@@ -11,6 +11,9 @@ flask = "*"
 flask-restful = "*"
 flask-sqlalchemy = "*"
 flask-env = "*"
+authlib = "*"
+sqlalchemy-utils = "*"
+passlib = "*"
 
 [requires]
 python_version = "3"

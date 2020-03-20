@@ -1,19 +1,26 @@
 from flask import Flask
 from flask_env import MetaFlaskEnv
-from flask_restful import Api
-from flask_sqlalchemy import SQLAlchemy
 
-from covod.resources.foo import Foo
+from covod.models.models import db
+from covod.oauth2 import setup_oauth
+from covod.blueprints import api, oauth2
+
 
 class Configuration(metaclass=MetaFlaskEnv):
     ENV_LOAD_ALL = True
 
+
 app = Flask(__name__)
 app.config.from_object(Configuration)
 
-api = Api(app)
-db = SQLAlchemy(app)
+app.register_blueprint(api.bp)
+app.register_blueprint(oauth2.bp)
 
-api.add_resource(Foo, '/foo', '/foo/<string:id>')
 
-api.init_app(app)
+@app.before_first_request
+def create_tables():
+    db.create_all()
+
+
+db.init_app(app)
+setup_oauth(app)
