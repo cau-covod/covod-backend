@@ -1,7 +1,7 @@
 from flask_restful import Resource
 
 class Foo(Resource):
-    def get(self):
-        return "Hello World!"
+    def get(self, id="World"):
+        return f"Hello {id}!"
     def post(self):
-        pass 
+        pass

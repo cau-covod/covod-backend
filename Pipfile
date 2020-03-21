@@ -14,6 +14,7 @@ flask-env = "*"
 authlib = "*"
 sqlalchemy-utils = "*"
 passlib = "*"
+flask-cloudy = "*"
 
 [requires]
 python_version = "3"
