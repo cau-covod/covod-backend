@@ -6,4 +6,5 @@ WORKDIR /app
 COPY . .
 
 EXPOSE 5000
+RUN chmod +x docker-start
 CMD ["./docker-start"]
