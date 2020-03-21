@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_env import MetaFlaskEnv
+from flask_cors import CORS
 
 from covod.models.models import db
 from covod.oauth2 import setup_oauth
@@ -13,6 +14,7 @@ class Configuration(metaclass=MetaFlaskEnv):
 
 app = Flask(__name__)
 app.config.from_object(Configuration)
+CORS(app)
 
 app.register_blueprint(api.bp)
 app.register_blueprint(oauth2.bp)
