@@ -18,4 +18,4 @@ def revoke_token():
 @bp.route("/check_token", methods=["POST"])
 @require_oauth("upload")
 def check_token():
-    return "Working! \o/"
+    return "Working! \\o/"

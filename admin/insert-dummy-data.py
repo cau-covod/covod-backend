@@ -12,6 +12,8 @@ user = User(username="test", full_name="Test User", password="passwort")
 course = Course(name="Bleh", description="Blah blah")
 lecture = Lecture(number=1, name="Blu blu", course=course)
 
+course.add_user(user)
+
 client = OAuth2Client(
     user=user,
     client_id="PPDPDvXf7bkd5bDLVhttUIxn",
