@@ -8,6 +8,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Enum
 from sqlalchemy_utils import UUIDType
 from sqlalchemy_utils.types.password import PasswordType
+from sqlalchemy_utils.types.json import JSONType
 from authlib.integrations.sqla_oauth2 import (
     OAuth2ClientMixin,
     OAuth2TokenMixin,
@@ -21,6 +22,12 @@ class MediaType(enum.Enum):
     AUDIO_ONLY = 2
     AUDIO_VIDEO = 3
 
+class Timestamps(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    uuid = db.Column(UUIDType(binary=False), unique=True, nullable=False)
+    json = db.Column(JSONType())
+    lecture_id = db.Column(db.Integer, db.ForeignKey("lecture.id"))
+    lecture = db.relationship("Lecture", back_populates="timestamps", uselist=False)
 
 class Media(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -33,10 +40,8 @@ class Media(db.Model):
 class PDF(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     uuid = db.Column(UUIDType(binary=False), unique=True, nullable=False)
-    #extension = db.Column(db.String(4), nullable=False)
-    #type = db.Column(Enum(MediaType), nullable=False)
     lecture_id = db.Column(db.Integer, db.ForeignKey("lecture.id"))
-    lecture = db.relationship("Lecture", back_populates="media", uselist=False)
+    lecture = db.relationship("Lecture", back_populates="pdf", uselist=False)
 
 class Lecture(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -46,6 +51,7 @@ class Lecture(db.Model):
     course_id = db.Column(db.Integer, db.ForeignKey("course.id"), nullable=False)
     media = db.relationship("Media", uselist=False, back_populates="lecture")
     pdf = db.relationship("PDF", uselist=False, back_populates="lecture")
+    timestamps = db.relationship("Timestamps", uselist=False, back_populates="lecture")
 
     def __str__(self):
         return str(self.number)

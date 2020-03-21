@@ -1,15 +1,19 @@
-import uuid, fnmatch
+import uuid, fnmatch, json
 
 from flask import request, Response
 from flask_restful import Resource
 from flask_cloudy import Storage
 
-from covod.models.models import PDF, Lecture, MediaType, Media, db
+from authlib.integrations.flask_oauth2 import current_token
+
+from covod.models.models import Timestamps, PDF, Lecture, MediaType, Media, db
 from covod.oauth2 import require_oauth
+
 
 storage = Storage()
 
 class LectureMedia(Resource):
+    @require_oauth("view")
     def get(self, id):
         # TODO: use cloudy storage with S3
         # obj = storage.get(str(id)+".mp3")
@@ -35,12 +39,14 @@ class LectureMedia(Resource):
     # TODO: Better oauth errors
     @require_oauth("upload")
     def post(self, id):
-        file = request.files['file']
-        # TODO test if lecture belongs to user
         lecture = Lecture.query.filter_by(id=id).first_or_404()
         print(lecture)
-        media_uuid = uuid.uuid4()
 
+        if not (current_token.user_id == lecture.course.user_id):
+            return "Unauthorized", 401, {}
+
+        media_uuid = uuid.uuid4()
+        file = request.files['file']
         upload = storage.upload(file, name=str(media_uuid), prefix=f"{lecture.course.uuid}/", extensions=["mp3", "mp4"])
 
         media_type = None
@@ -55,10 +61,11 @@ class LectureMedia(Resource):
         db.session.add(media)
         db.session.commit()
 
-        return {'name': upload.name, 'extension': upload.extension, 'size': upload.size, 'url': upload.url}
+        return {'name': upload.name, 'extension': upload.extension, 'size': upload.size, 'url': upload.url}, 201, {}
 
 
 class LecturePDF(Resource):
+    @require_oauth("view")
     def get(self, id):
         # TODO: use cloudy storage with S3
         # obj = storage.get(str(id)+".mp3")
@@ -74,26 +81,48 @@ class LecturePDF(Resource):
         response = Response(file.read())
         response.headers['content-type'] = 'application/pdf'
         return response
-
+    
+    @require_oauth("upload")
     def post(self, id):
-        file = request.files['file']
-        # TODO test if lecture belongs to user
         lecture = Lecture.query.filter_by(id=id).first_or_404()
         print(lecture)
-        pdf_uuid = uuid.uuid4()
 
+        if not (current_token.user_id == lecture.course.user_id):
+            return "Unauthorized", 401, {}
+
+        pdf_uuid = uuid.uuid4()
+        file = request.files['file']
         upload = storage.upload(file, name=str(pdf_uuid), prefix=f"{lecture.course.uuid}/", extensions=["pdf"])
 
-        pdf = PDF(uuid=pdf_uuid, lecture=lecture, extension=upload.extension)
+        pdf = PDF(uuid=pdf_uuid, lecture=lecture)
         db.session.add(pdf)
         db.session.commit()
 
-        return {'name': upload.name, 'extension': upload.extension, 'size': upload.size, 'url': upload.url}
+        return {'name': upload.name, 'extension': upload.extension, 'size': upload.size, 'url': upload.url}, 201, {}
 
 
 class LectureTimestamps(Resource):
-    def get(self):
-        pass
+    @require_oauth("view")
+    def get(self, id):
+        lecture = Lecture.query.filter_by(id=id).first_or_404()
+        if not lecture.timestamps:
+            return []
+        else:
+            return json.loads(lecture.timestamps.json)
 
-    def post(self):
-        pass
+    @require_oauth("upload")
+    def post(self, id):
+        lecture = Lecture.query.filter_by(id=id).first_or_404()
+        
+        if not (current_token.user_id == lecture.course.user_id):
+            return "Unauthorized", 401, {}
+        
+        timestamp_uuid = uuid.uuid4()
+        timestamps_json = request.form['timestamps']
+
+        timestamp = Timestamps(uuid=timestamp_uuid, json=timestamps_json, lecture=lecture)
+        db.session.add(timestamp)
+        db.session.commit()
+
+        return "Created", 201, {}
+    

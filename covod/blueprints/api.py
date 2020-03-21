@@ -2,7 +2,7 @@ from flask import Blueprint
 from flask_restful import Api
 
 from covod.resources.foo import Foo
-from covod.resources.lecture import LectureMedia, LecturePDF
+from covod.resources.lecture import LectureMedia, LecturePDF, LectureTimestamps
 
 bp = Blueprint("api", __name__, url_prefix="/api")
 api = Api(bp)
@@ -10,3 +10,4 @@ api = Api(bp)
 api.add_resource(Foo, "/foo", "/foo/<string:id>")
 api.add_resource(LectureMedia, "/lecture/<int:id>/media")
 api.add_resource(LecturePDF, "/lecture/<int:id>/pdf")
+api.add_resource(LectureTimestamps, "/lecture/<int:id>/timestamps")
