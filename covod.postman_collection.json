@@ -10,7 +10,7 @@
 		{
 			"name": "Generate token",
 			"request": {
-				"url": "http://127.0.0.1:5000/oauth2/token",
+				"url": "http://covod.bre4k3r.de:22022/oauth2/token",
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -43,7 +43,7 @@
 						},
 						{
 							"key": "scope",
-							"value": "upload download",
+							"value": "upload view",
 							"type": "text"
 						}
 					]
@@ -55,7 +55,7 @@
 		{
 			"name": "Check Token",
 			"request": {
-				"url": "http://127.0.0.1:5000/oauth2/check_token",
+				"url": "localhost:5000/oauth2/check_token",
 				"method": "POST",
 				"header": [
 					{
@@ -72,12 +72,12 @@
 		{
 			"name": "Upload media",
 			"request": {
-				"url": "http://127.0.0.1:5000/api/lecture/1/media",
+				"url": "localhost:5000/api/v1/lecture/1/media",
 				"method": "POST",
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "bearer sCzfmbJeS9sI7L7EG0KINpuKZA7SZwhg6m26nJyhSa",
+						"value": "bearer EExm0hT4ulRASf8GSV3628n1qukB8VwXF8pmI5iPDS",
 						"description": ""
 					}
 				],
@@ -98,7 +98,7 @@
 		{
 			"name": "Upload pdf",
 			"request": {
-				"url": "http://127.0.0.1:5000/api/lecture/1/pdf",
+				"url": "localhost:5000/api/lecture/1/pdf",
 				"method": "POST",
 				"header": [
 					{
@@ -124,25 +124,23 @@
 		{
 			"name": "Upload Timestamps",
 			"request": {
-				"url": "http://127.0.0.1:5000/api/lecture/1/timestamps",
+				"url": "localhost:5000/api/v1/lecture/1/timestamps",
 				"method": "POST",
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "bearer hoya2y4MZPudYSRovdOmTcynLcdD8Vz12CxLeGuIgn",
+						"value": "bearer f5xpIvFDH4eEoIZ0FxisgliJsIM47hbNxnrHYG1PSK",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
 						"description": ""
 					}
 				],
 				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "timestamps",
-							"type": "text",
-							"src": "/home/user/Music/Best of Dance Disco Music Hits/Gliese_-_The_Rythm_of_the_Night.mp3",
-							"value": "{\"test\":\"successful\"}"
-						}
-					]
+					"mode": "raw",
+					"raw": "{\"test\":\"still successful\"}"
 				},
 				"description": ""
 			},
@@ -151,12 +149,12 @@
 		{
 			"name": "Download media",
 			"request": {
-				"url": "http://127.0.0.1:5000/api/lecture/1/media",
+				"url": "localhost:5000/api/v1/lecture/1/media",
 				"method": "GET",
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "bearer V5uuxsR7fIp3nW5XC9o2Nu4MNK9qqbH2GPaYX5QVTi",
+						"value": "bearer EExm0hT4ulRASf8GSV3628n1qukB8VwXF8pmI5iPDS",
 						"description": ""
 					}
 				],
@@ -168,7 +166,7 @@
 		{
 			"name": "Download pdf",
 			"request": {
-				"url": "http://127.0.0.1:5000/api/lecture/1/pdf",
+				"url": "localhost:5000/api/lecture/1/pdf",
 				"method": "GET",
 				"header": [
 					{
@@ -185,12 +183,12 @@
 		{
 			"name": "Download Timestamps",
 			"request": {
-				"url": "http://127.0.0.1:5000/api/lecture/1/timestamps",
+				"url": "localhost:5000/api/v1/lecture/1/timestamps",
 				"method": "GET",
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "bearer hoya2y4MZPudYSRovdOmTcynLcdD8Vz12CxLeGuIgn",
+						"value": "bearer f5xpIvFDH4eEoIZ0FxisgliJsIM47hbNxnrHYG1PSK",
 						"description": ""
 					}
 				],
@@ -203,6 +201,31 @@
 							"src": "testpdf.pdf"
 						}
 					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Add Lecture",
+			"request": {
+				"url": "localhost:5000/api/v1/lecture",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer BMHbOHxi0vOCyjsyik7hx0VaGHl8ZoHBtHCI7i730G",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"courseid\": 1,\n\t\"number\": 2,\n\t\"name\": \"lecture added successfully\"\n}"
 				},
 				"description": ""
 			},
