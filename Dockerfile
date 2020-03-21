@@ -1,8 +1,9 @@
 FROM kennethreitz/pipenv
 
-RUN pipenv install && pipenv install waitress
+RUN pipenv install gunicorn
 
 WORKDIR /app
 COPY . .
 
-CMD ["pipenv", "run", "waitress-serve", "--call", "covod.app:create_app"]
+EXPOSE 5000
+CMD ["pipenv", "run", "gunicorn", "--bind", "0.0.0.0:5000", "covod.app:app"]
