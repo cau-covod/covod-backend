@@ -1,6 +1,6 @@
 FROM kennethreitz/pipenv
 
-RUN pipenv install gunicorn
+RUN pipenv install gunicorn psycopg2
 
 WORKDIR /app
 COPY . .
