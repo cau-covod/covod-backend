@@ -1,6 +1,9 @@
+import uuid
 import enum
 import time
 from datetime import datetime
+
+import uuid as uuid
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Enum
 from sqlalchemy_utils import UUIDType
@@ -20,15 +23,16 @@ class MediaType(enum.Enum):
 
 
 class Media(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     uuid = db.Column(UUIDType(binary=False), unique=True, nullable=False)
+    extension = db.Column(db.String(4), nullable=False)
     type = db.Column(Enum(MediaType), nullable=False)
     lecture_id = db.Column(db.Integer, db.ForeignKey("lecture.id"), nullable=False)
     lecture = db.relationship("Lecture", back_populates="media", uselist=False)
 
 
 class Lecture(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     number = db.Column(db.Integer, nullable=False)
     pub_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     name = db.Column(db.String(80))
@@ -40,7 +44,8 @@ class Lecture(db.Model):
 
 
 class Course(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    uuid = db.Column(UUIDType(binary=False), unique=True, nullable=False, default=uuid.uuid4())
     name = db.Column(db.String(80), nullable=False)
     description = db.Column(db.String(), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
@@ -51,7 +56,7 @@ class Course(db.Model):
 
 
 class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(40), unique=True)
     full_name = db.Column(db.String(80))
     password = db.Column(PasswordType(schemes=["pbkdf2_sha512"]))

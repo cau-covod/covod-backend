@@ -25,4 +25,4 @@ def create_tables():
 
 db.init_app(app)
 setup_oauth(app)
-storage.init_app
+storage.init_app(app)
