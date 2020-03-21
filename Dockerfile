@@ -1,5 +1,8 @@
 FROM kennethreitz/pipenv
 
-RUN pipenv install
+RUN pipenv install && pipenv install waitress
 
-CMD ["pipenv", "run", "flask", "run"]
+WORKDIR /app
+COPY . .
+
+CMD ["pipenv", "run", "waitress-serve", "--call", "covod.app:create_app"]

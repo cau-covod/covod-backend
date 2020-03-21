@@ -17,12 +17,11 @@ app.config.from_object(Configuration)
 app.register_blueprint(api.bp)
 app.register_blueprint(oauth2.bp)
 
-
 @app.before_first_request
 def create_tables():
     db.create_all()
 
-
 db.init_app(app)
 setup_oauth(app)
+
 storage.init_app
