@@ -1,6 +1,7 @@
 from flask import Blueprint
 from flask_restful import Api
 
+from covod.resources.comments import Comments, CommentsFlat
 from covod.resources.foo import Foo
 from covod.resources.lecture import LectureMedia, LecturePDF, LectureTimestamps
 from covod.resources.user_feed import UserFeed
@@ -12,4 +13,6 @@ api.add_resource(Foo, "/foo", "/foo/<string:id>")
 api.add_resource(LectureMedia, "/lecture/<int:id>/media")
 api.add_resource(LecturePDF, "/lecture/<int:id>/pdf")
 api.add_resource(LectureTimestamps, "/lecture/<int:id>/timestamps")
+api.add_resource(Comments, "/lecture/<int:lecture_id>/comments")
+api.add_resource(CommentsFlat, "/lecture/<int:lecture_id>/comments-flat")
 api.add_resource(UserFeed, "/user/<int:user_id>/feed")

@@ -52,6 +52,37 @@ class PDF(db.Model):
     lecture = db.relationship("Lecture", back_populates="pdf", uselist=False)
 
 
+class Comment(db.Model):
+    @staticmethod
+    def get_n():
+        return 6
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    modified_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    timestamp = db.Column(db.Integer)
+    text = db.Column(db.Text)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    user = db.relationship("User")
+    path = db.Column(db.Text, index=True)
+    parent_id = db.Column(db.Integer, db.ForeignKey("comment.id"))
+    lecture_id = db.Column(db.Integer, db.ForeignKey("lecture.id"))
+    replies = db.relationship(
+        "Comment", backref=db.backref("parent", remote_side=[id]),
+        lazy="dynamic")
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+        # Dark magic
+        prefix = self.parent.path + "." if self.parent else ""
+        self.path = prefix + "{:0{}d}".format(self.id, self.get_n())
+        db.session.commit()
+
+    def level(self):
+        return len(self.path) // self.get_n() - 1
+
+
 class Lecture(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     number = db.Column(db.Integer, nullable=False)
@@ -61,6 +92,7 @@ class Lecture(db.Model):
     media = db.relationship("Media", uselist=False, back_populates="lecture")
     pdf = db.relationship("PDF", uselist=False, back_populates="lecture")
     timestamps = db.relationship("Timestamps", uselist=False, back_populates="lecture")
+    comments = db.relationship("Comment")
 
     def __str__(self):
         return str(self.number)
@@ -70,7 +102,7 @@ class Course(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     uuid = db.Column(UUIDType(binary=False), unique=True, nullable=False, default=uuid.uuid4())
     name = db.Column(db.String(80), nullable=False)
-    description = db.Column(db.String(), nullable=False)
+    description = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     lectures = db.relationship("Lecture", backref="course")
     users = db.relationship("User", secondary=user_courses, back_populates="courses")

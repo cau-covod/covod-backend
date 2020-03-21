@@ -5,7 +5,7 @@ from covod.models.models import User, Lecture, db, Course
 lecture_fields = {
     "id": fields.Integer,
     "number": fields.Integer,
-    "pub_time": fields.DateTime,
+    "pub_time": fields.DateTime(dt_format="iso8601"),
     "description": fields.String
 }
 
