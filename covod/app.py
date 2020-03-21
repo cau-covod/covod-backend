@@ -18,6 +18,11 @@ app.register_blueprint(api.bp)
 app.register_blueprint(oauth2.bp)
 
 
+@app.cli.command("insert-dummy-data")
+def insert_dummy_data():
+    exec(open("admin/insert-dummy-data.py").read())
+
+
 @app.before_first_request
 def create_tables():
     db.create_all()
