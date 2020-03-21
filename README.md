@@ -7,5 +7,5 @@
 4. Run `pipenv run flask run` to start the development webserver.
 
 ## Filling db with test data
-1. Run `pipenv run flash shell`
+1. Run `pipenv run flask shell`
 2. Run `exec(open("admin/insert-dummy-data.py").read())`
