@@ -9,7 +9,7 @@ print("Created tables")
 
 
 user = User(username="test", full_name="Test User", password="passwort")
-course = Course(name="Bleh", description="Blah blah")
+course = Course(name="Bleh", description="Blah blah", user_id=1)
 lecture = Lecture(number=1, name="Blu blu", course=course)
 
 client = OAuth2Client(
@@ -26,7 +26,7 @@ client_metadata = {
     "grant_types": "password",
     "redirect_uris": "",
     "response_types": "code",
-    "scope": "upload",
+    "scope": "upload view",
     "token_endpoint_auth_method": "client_secret_post"
 }
 

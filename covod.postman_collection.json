@@ -1,13 +1,16 @@
 {
+	"variables": [],
 	"info": {
-		"_postman_id": "af7b2b35-7f96-4e97-a3b9-8e5d78d8549b",
 		"name": "covod",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"_postman_id": "4ecffc49-d880-1a62-9c87-9c039f35fa9e",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "Generate token",
 			"request": {
+				"url": "http://127.0.0.1:5000/oauth2/token",
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -40,121 +43,170 @@
 						},
 						{
 							"key": "scope",
-							"value": "upload",
+							"value": "upload download",
 							"type": "text"
 						}
 					]
 				},
-				"url": {
-					"raw": "http://127.0.0.1:5000/oauth2/token",
-					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "5000",
-					"path": [
-						"oauth2",
-						"token"
-					]
-				}
+				"description": ""
 			},
 			"response": []
 		},
 		{
 			"name": "Check Token",
 			"request": {
-				"auth": {
-					"type": "oauth2",
-					"oauth2": [
-						{
-							"key": "accessToken",
-							"value": "JDJ9cq9pnijay95A8rdTZmeZ2WKBhaXR3ZUSeTUcxo",
-							"type": "string"
-						},
-						{
-							"key": "addTokenTo",
-							"value": "header",
-							"type": "string"
-						}
-					]
-				},
+				"url": "http://127.0.0.1:5000/oauth2/check_token",
 				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": []
-				},
-				"url": {
-					"raw": "http://127.0.0.1:5000/oauth2/check_token",
-					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "5000",
-					"path": [
-						"oauth2",
-						"check_token"
-					]
-				}
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer sCzfmbJeS9sI7L7EG0KINpuKZA7SZwhg6m26nJyhSa",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
 			},
 			"response": []
 		},
 		{
 			"name": "Upload media",
 			"request": {
-				"auth": {
-					"type": "oauth2",
-					"oauth2": [
-						{
-							"key": "accessToken",
-							"value": "JDJ9cq9pnijay95A8rdTZmeZ2WKBhaXR3ZUSeTUcxo",
-							"type": "string"
-						},
-						{
-							"key": "addTokenTo",
-							"value": "header",
-							"type": "string"
-						}
-					]
-				},
+				"url": "http://127.0.0.1:5000/api/lecture/1/media",
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer sCzfmbJeS9sI7L7EG0KINpuKZA7SZwhg6m26nJyhSa",
+						"description": ""
+					}
+				],
 				"body": {
 					"mode": "formdata",
 					"formdata": [
 						{
 							"key": "file",
 							"type": "file",
-							"src": "/home/user/Music/Best of Dance Disco Music Hits/Gliese_-_The_Rythm_of_the_Night.mp3"
+							"src": "testvideo.mp4"
 						}
 					]
 				},
-				"url": {
-					"raw": "http://127.0.0.1:5000/api/lecture/1/media",
-					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "5000",
-					"path": [
-						"api",
-						"lecture",
-						"1",
-						"media"
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Upload pdf",
+			"request": {
+				"url": "http://127.0.0.1:5000/api/lecture/1/pdf",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer jzpQcFD3GM2VDdnlwEtxOoed97Y0syYgmKcrGwxr1P",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "testpdf.pdf"
+						}
 					]
-				}
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Upload Timestamps",
+			"request": {
+				"url": "http://127.0.0.1:5000/api/lecture/1/timestamps",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer hoya2y4MZPudYSRovdOmTcynLcdD8Vz12CxLeGuIgn",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "timestamps",
+							"type": "text",
+							"src": "/home/user/Music/Best of Dance Disco Music Hits/Gliese_-_The_Rythm_of_the_Night.mp3",
+							"value": "{\"test\":\"successful\"}"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Download media",
+			"request": {
+				"url": "http://127.0.0.1:5000/api/lecture/1/media",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer V5uuxsR7fIp3nW5XC9o2Nu4MNK9qqbH2GPaYX5QVTi",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Download pdf",
+			"request": {
+				"url": "http://127.0.0.1:5000/api/lecture/1/pdf",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer d3cGCb3bC0VIVieDzFFPNbmyq54ue8vOFUX7dhPOOi",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Download Timestamps",
+			"request": {
+				"url": "http://127.0.0.1:5000/api/lecture/1/timestamps",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer hoya2y4MZPudYSRovdOmTcynLcdD8Vz12CxLeGuIgn",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "testpdf.pdf"
+						}
+					]
+				},
+				"description": ""
 			},
 			"response": []
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }
