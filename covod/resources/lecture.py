@@ -1,16 +1,34 @@
 import uuid, fnmatch, json
 
 from flask import request, Response
-from flask_restful import Resource
+from flask_restful import Resource, reqparse
+from flask_restful.reqparse import RequestParser
 from flask_cloudy import Storage
 
 from authlib.integrations.flask_oauth2 import current_token
 
-from covod.models.models import Timestamps, PDF, Lecture, MediaType, Media, db
+from covod.models.models import Timestamps, PDF, Lecture, Course, MediaType, Media, db
 from covod.oauth2 import require_oauth
 
-
 storage = Storage()
+
+class LectureAPI(Resource):
+    @require_oauth("upload")
+    def put(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('courseid', type=int)
+        parser.add_argument('number', type=int)
+        parser.add_argument('name', type=str)
+        args = parser.parse_args()
+
+        course = Course.query.filter_by(id=args['courseid']).first_or_404()
+        if not (current_token.user_id == course.user_id):
+            return "Unauthorized", 401, {}
+        
+        lecture = Lecture(number=args['number'], name=args['name'], course=course)
+        db.session.add(lecture)
+        db.session.commit()
+        return "Created", 201, {}
 
 class LectureMedia(Resource):
     @require_oauth("view")
@@ -118,11 +136,13 @@ class LectureTimestamps(Resource):
             return "Unauthorized", 401, {}
         
         timestamp_uuid = uuid.uuid4()
-        timestamps_json = request.form['timestamps']
+        print(request.data)
+        timestamps_json = request.data.decode("utf-8")
+
+        # TODO validate json before saving
 
         timestamp = Timestamps(uuid=timestamp_uuid, json=timestamps_json, lecture=lecture)
         db.session.add(timestamp)
         db.session.commit()
 
         return "Created", 201, {}
-    
