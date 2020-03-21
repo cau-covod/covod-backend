@@ -14,6 +14,8 @@ bp = Blueprint("oauth2", __name__)
 
 
 class PasswordGrant(grants.ResourceOwnerPasswordCredentialsGrant):
+    TOKEN_ENDPOINT_AUTH_METHODS = ["client_secret_basic", "client_secret_post"]
+
     def authenticate_user(self, username, password):
         user = User.query.filter_by(username=username).first()
         if user is not None and user.check_password(password):

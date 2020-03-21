@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, url_for
 from flask_env import MetaFlaskEnv
 
 from covod.models.models import db
