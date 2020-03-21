@@ -30,6 +30,13 @@ class Media(db.Model):
     lecture_id = db.Column(db.Integer, db.ForeignKey("lecture.id"))
     lecture = db.relationship("Lecture", back_populates="media", uselist=False)
 
+class PDF(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    uuid = db.Column(UUIDType(binary=False), unique=True, nullable=False)
+    #extension = db.Column(db.String(4), nullable=False)
+    #type = db.Column(Enum(MediaType), nullable=False)
+    lecture_id = db.Column(db.Integer, db.ForeignKey("lecture.id"))
+    lecture = db.relationship("Lecture", back_populates="media", uselist=False)
 
 class Lecture(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -38,6 +45,7 @@ class Lecture(db.Model):
     name = db.Column(db.String(80))
     course_id = db.Column(db.Integer, db.ForeignKey("course.id"), nullable=False)
     media = db.relationship("Media", uselist=False, back_populates="lecture")
+    pdf = db.relationship("PDF", uselist=False, back_populates="lecture")
 
     def __str__(self):
         return str(self.number)
