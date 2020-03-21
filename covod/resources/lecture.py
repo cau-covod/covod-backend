@@ -1,5 +1,4 @@
 import uuid
-from http.client import HTTPException
 
 from flask import request
 from flask_restful import Resource
@@ -15,7 +14,7 @@ class LectureMedia(Resource):
     def get(self, id):
         return "Got id " + str(id)
 
-    # If youget {"message": null} the oauth authentication failed
+    # If you get {"message": null} the oauth authentication failed
     # TODO: Better oauth errors
     @require_oauth("upload")
     def post(self, id):

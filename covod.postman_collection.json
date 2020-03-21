@@ -1,0 +1,160 @@
+{
+	"info": {
+		"_postman_id": "af7b2b35-7f96-4e97-a3b9-8e5d78d8549b",
+		"name": "covod",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Generate token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "PPDPDvXf7bkd5bDLVhttUIxn",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "test",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "passwort",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "qvU7ckxCxYZBNfIItVRtPp5mML9UxnTu4M31migU9FYXTj13",
+							"type": "text"
+						},
+						{
+							"key": "scope",
+							"value": "upload",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/oauth2/token",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"oauth2",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check Token",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "JDJ9cq9pnijay95A8rdTZmeZ2WKBhaXR3ZUSeTUcxo",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/oauth2/check_token",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"oauth2",
+						"check_token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload media",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "JDJ9cq9pnijay95A8rdTZmeZ2WKBhaXR3ZUSeTUcxo",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/home/user/Music/Best of Dance Disco Music Hits/Gliese_-_The_Rythm_of_the_Night.mp3"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/api/lecture/1/media",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"lecture",
+						"1",
+						"media"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
