@@ -4,7 +4,7 @@ from flask_restful import Api
 from covod.resources.foo import Foo
 from covod.resources.lecture import LectureMedia
 
-bp = Blueprint("api", __name__, url_prefix="/api")
+bp = Blueprint("api", __name__, url_prefix="/api/v1")
 api = Api(bp)
 
 api.add_resource(Foo, "/foo", "/foo/<string:id>")
