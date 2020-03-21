@@ -2,7 +2,8 @@ version: "3"
 
 services:
   covod:
-    env_file: .env.docker
+    env_file:
+      - .env.docker
     build: .
     ports:
-      - "5000:22022"
+      - "22022:5000"
