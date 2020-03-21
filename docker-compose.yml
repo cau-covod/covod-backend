@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  db:
+    env_file:
+      - .env.docker
+    image: postgres
+    restart: always
+    
+  covod:
+    env_file:
+      - .env.docker
+    restart: always
+    build: .
+    ports:
+      - "22022:5000"

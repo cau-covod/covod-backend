@@ -27,7 +27,6 @@ def insert_dummy_data():
 def create_tables():
     db.create_all()
 
-
 db.init_app(app)
 setup_oauth(app)
 storage.init_app(app)
