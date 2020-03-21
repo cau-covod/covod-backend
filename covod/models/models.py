@@ -27,7 +27,7 @@ class Media(db.Model):
     uuid = db.Column(UUIDType(binary=False), unique=True, nullable=False)
     extension = db.Column(db.String(4), nullable=False)
     type = db.Column(Enum(MediaType), nullable=False)
-    lecture_id = db.Column(db.Integer, db.ForeignKey("lecture.id"), nullable=False)
+    lecture_id = db.Column(db.Integer, db.ForeignKey("lecture.id"))
     lecture = db.relationship("Lecture", back_populates="media", uselist=False)
 
 
@@ -40,7 +40,7 @@ class Lecture(db.Model):
     media = db.relationship("Media", uselist=False, back_populates="lecture")
 
     def __str__(self):
-        return self.number
+        return str(self.number)
 
 
 class Course(db.Model):
@@ -67,11 +67,14 @@ class User(db.Model):
     def check_password(self, password):
         return self.password == password
 
+    def get_user_id(self):
+        return self.id
+
 
 class OAuth2Client(db.Model, OAuth2ClientMixin):
     __tablename__ = "oauth2_client"
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id", ondelete="CASCADE"))
     user = db.relationship("User")
 
@@ -79,7 +82,7 @@ class OAuth2Client(db.Model, OAuth2ClientMixin):
 class OAuth2Token(db.Model, OAuth2TokenMixin):
     __tablename__ = "oauth2_token"
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id", ondelete="CASCADE"))
     user = db.relationship("User")
 
