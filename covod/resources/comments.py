@@ -62,6 +62,7 @@ class CommentsAPI(Resource):
 
 
 class CommentsFlatAPI(Resource):
+    @require_oauth("view")
     @marshal_with(comment_fields, envelope="comments")
     def get(self, lecture_id):
         return Comment.query.filter_by(lecture_id=lecture_id).all()

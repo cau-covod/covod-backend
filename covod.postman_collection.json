@@ -1,16 +1,13 @@
 {
-	"variables": [],
 	"info": {
+		"_postman_id": "10e610f8-9117-4b37-9ec3-fa12208784d4",
 		"name": "covod",
-		"_postman_id": "4ecffc49-d880-1a62-9c87-9c039f35fa9e",
-		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "Generate token",
 			"request": {
-				"url": "http://covod.bre4k3r.de:22022/oauth2/token",
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -43,42 +40,37 @@
 						},
 						{
 							"key": "scope",
-							"value": "upload view",
+							"value": "upload view comment",
 							"type": "text"
 						}
 					]
 				},
-				"description": ""
+				"url": "http://covod.bre4k3r.de:22022/oauth2/token"
 			},
 			"response": []
 		},
 		{
 			"name": "Check Token",
 			"request": {
-				"url": "localhost:5000/oauth2/check_token",
 				"method": "POST",
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "bearer sCzfmbJeS9sI7L7EG0KINpuKZA7SZwhg6m26nJyhSa",
-						"description": ""
+						"value": "bearer sCzfmbJeS9sI7L7EG0KINpuKZA7SZwhg6m26nJyhSa"
 					}
 				],
-				"body": {},
-				"description": ""
+				"url": "localhost:5000/oauth2/check_token"
 			},
 			"response": []
 		},
 		{
 			"name": "Upload media",
 			"request": {
-				"url": "localhost:5000/api/v1/lecture/1/media",
 				"method": "POST",
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "bearer EExm0hT4ulRASf8GSV3628n1qukB8VwXF8pmI5iPDS",
-						"description": ""
+						"value": "bearer EExm0hT4ulRASf8GSV3628n1qukB8VwXF8pmI5iPDS"
 					}
 				],
 				"body": {
@@ -91,20 +83,18 @@
 						}
 					]
 				},
-				"description": ""
+				"url": "localhost:5000/api/v1/lecture/1/media"
 			},
 			"response": []
 		},
 		{
 			"name": "Upload pdf",
 			"request": {
-				"url": "localhost:5000/api/lecture/1/pdf",
 				"method": "POST",
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "bearer jzpQcFD3GM2VDdnlwEtxOoed97Y0syYgmKcrGwxr1P",
-						"description": ""
+						"value": "bearer jzpQcFD3GM2VDdnlwEtxOoed97Y0syYgmKcrGwxr1P"
 					}
 				],
 				"body": {
@@ -117,144 +107,183 @@
 						}
 					]
 				},
-				"description": ""
+				"url": "localhost:5000/api/lecture/1/pdf"
 			},
 			"response": []
 		},
 		{
 			"name": "Upload Timestamps",
 			"request": {
-				"url": "localhost:5000/api/v1/lecture/1/timestamps",
 				"method": "POST",
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "bearer f5xpIvFDH4eEoIZ0FxisgliJsIM47hbNxnrHYG1PSK",
-						"description": ""
+						"value": "bearer f5xpIvFDH4eEoIZ0FxisgliJsIM47hbNxnrHYG1PSK"
 					},
 					{
 						"key": "Content-Type",
-						"value": "application/json",
-						"description": ""
+						"value": "application/json"
 					}
 				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\"test\":\"still successful\"}"
 				},
-				"description": ""
+				"url": "localhost:5000/api/v1/lecture/1/timestamps"
 			},
 			"response": []
 		},
 		{
 			"name": "Download media",
 			"request": {
-				"url": "localhost:5000/api/v1/lecture/1/media",
 				"method": "GET",
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "bearer EExm0hT4ulRASf8GSV3628n1qukB8VwXF8pmI5iPDS",
-						"description": ""
+						"value": "bearer EExm0hT4ulRASf8GSV3628n1qukB8VwXF8pmI5iPDS"
 					}
 				],
-				"body": {},
-				"description": ""
+				"url": "localhost:5000/api/v1/lecture/1/media"
 			},
 			"response": []
 		},
 		{
 			"name": "Download pdf",
 			"request": {
-				"url": "localhost:5000/api/lecture/1/pdf",
 				"method": "GET",
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "bearer d3cGCb3bC0VIVieDzFFPNbmyq54ue8vOFUX7dhPOOi",
-						"description": ""
+						"value": "bearer d3cGCb3bC0VIVieDzFFPNbmyq54ue8vOFUX7dhPOOi"
 					}
 				],
-				"body": {},
-				"description": ""
+				"url": "localhost:5000/api/lecture/1/pdf"
 			},
 			"response": []
 		},
 		{
 			"name": "Download Timestamps",
 			"request": {
-				"url": "localhost:5000/api/v1/lecture/1/timestamps",
 				"method": "GET",
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "bearer f5xpIvFDH4eEoIZ0FxisgliJsIM47hbNxnrHYG1PSK",
-						"description": ""
+						"value": "bearer f5xpIvFDH4eEoIZ0FxisgliJsIM47hbNxnrHYG1PSK"
 					}
 				],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "file",
-							"type": "file",
-							"src": "testpdf.pdf"
-						}
-					]
-				},
-				"description": ""
+				"url": "localhost:5000/api/v1/lecture/1/timestamps"
 			},
 			"response": []
 		},
 		{
 			"name": "Add Lecture",
 			"request": {
-				"url": "localhost:5000/api/v1/lecture",
 				"method": "PUT",
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "bearer ZV84liqB1K5bTKZWTTO3v55cscONVbqTkRhj7VDuHc",
-						"description": ""
+						"value": "bearer BMHbOHxi0vOCyjsyik7hx0VaGHl8ZoHBtHCI7i730G"
 					},
 					{
 						"key": "Content-Type",
-						"value": "application/json",
-						"description": ""
+						"value": "application/json"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"course_id\": 1,\n\t\"number\": 2,\n\t\"name\": \"lecture added successfully\"\n}"
+					"raw": "{\n\t\"courseid\": 1,\n\t\"number\": 2,\n\t\"name\": \"lecture added successfully\"\n}"
 				},
-				"description": ""
+				"url": "localhost:5000/api/v1/lecture"
 			},
 			"response": []
 		},
 		{
-			"name": "Get Lecture",
+			"name": "Get user feed",
 			"request": {
-				"url": "localhost:5000/api/v1/lecture/2",
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "bearer TduGBw1AJtaJ00vZBmIfeClvUHIZHlOF1qy4T2e1Th",
-						"description": ""
-					},
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"description": ""
+				"auth": {
+					"type": "oauth2",
+					"oauth2": {
+						"accessToken": "Gulhq1wcvaHPQiRF2b4uXoMHGdfVfXEcOMmKfuSK78",
+						"addTokenTo": "header"
 					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"course_id\": 1,\n\t\"number\": 2,\n\t\"name\": \"lecture added successfully\"\n}"
 				},
-				"description": ""
+				"method": "GET",
+				"header": [],
+				"url": "http://covod.bre4k3r.de:22022/api/v1/user/feed"
+			},
+			"response": []
+		},
+		{
+			"name": "Get comments recursive as tree",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": {
+						"accessToken": "2ihXK5eGtR1GJyU1NGWmE3BUW1OKJQmn7MD2EuxI0A",
+						"addTokenTo": "header"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": "http://covod.bre4k3r.de:22022/api/v1/lecture/1/comments"
+			},
+			"response": []
+		},
+		{
+			"name": "Get comments flat",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://covod.bre4k3r.de:22022/api/v1/lecture/1/comments-flat"
+			},
+			"response": []
+		},
+		{
+			"name": "Add comment",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": {
+						"accessToken": "QolVu3pr28CydTw1BebtOt4P8ZgZCN4yHPrmEE0ARU",
+						"addTokenTo": "header"
+					}
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "text",
+							"value": "Blah blah blah blah",
+							"description": "Comment text",
+							"type": "text"
+						},
+						{
+							"key": "parent",
+							"value": "1000",
+							"description": "Parent comment, optional",
+							"type": "text"
+						},
+						{
+							"key": "timestamp",
+							"value": "30",
+							"description": "Timestamp. optional",
+							"type": "text"
+						}
+					]
+				},
+				"url": "http://covod.bre4k3r.de:22022/api/v1/lecture/1/comments"
 			},
 			"response": []
 		}
-	]
+	],
+	"protocolProfileBehavior": {}
 }

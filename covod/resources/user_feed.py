@@ -1,6 +1,8 @@
+from authlib.integrations.flask_oauth2 import current_token
 from flask_restful import Resource, fields, marshal_with
 
-from covod.models.models import User, Lecture, db, Course
+from covod.models.models import User, Lecture, Course
+from covod.oauth2 import require_oauth
 
 lecture_fields = {
     "id": fields.Integer,
@@ -22,8 +24,9 @@ feed_fields = {
 
 
 class UserFeed(Resource):
+    @require_oauth("view")
     @marshal_with(feed_fields, envelope="feed")
-    def get(self, user_id):
-        user = User.query.filter_by(id=user_id).first_or_404()
+    def get(self):
+        user = User.query.filter_by(id=current_token.user_id).first_or_404()
         feed = user.query.join(Course, User.courses).join(Lecture).all()
         return feed
