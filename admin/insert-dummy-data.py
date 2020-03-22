@@ -8,11 +8,19 @@ db.create_all()
 print("Created tables")
 
 
-
 user = User(username="test", full_name="Frau Professor", password="passwort")
 user2 = User(username="benutzer", full_name="Ben Utzer", password="jajajaja")
+db.session.add(user)
+db.session.add(user2)
+db.session.commit()
+
 course = Course(name="Bleh", description="Blah blah", user_id=1)
+db.session.add(course)
+db.session.commit()
+
 lecture = Lecture(number=1, name="Blu blu", course=course)
+db.session.add(lecture)
+db.session.commit()
 
 c1 = Comment(text="Ist gut gemacht.", user_id=2, lecture_id=1)
 c2 = Comment(text="Dankeschön!", user_id=1, parent=c1, lecture_id=1)
@@ -45,13 +53,6 @@ client_metadata = {
 
 client.set_client_metadata(client_metadata)
 
-db.session.add(user)
-db.session.commit()
-
-course.add_user(user)
-
-db.session.add(course)
-db.session.add(lecture)
 db.session.add(client)
 db.session.commit()
 
