@@ -214,7 +214,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "bearer BMHbOHxi0vOCyjsyik7hx0VaGHl8ZoHBtHCI7i730G",
+						"value": "bearer ZV84liqB1K5bTKZWTTO3v55cscONVbqTkRhj7VDuHc",
 						"description": ""
 					},
 					{
@@ -225,7 +225,32 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"courseid\": 1,\n\t\"number\": 2,\n\t\"name\": \"lecture added successfully\"\n}"
+					"raw": "{\n\t\"course_id\": 1,\n\t\"number\": 2,\n\t\"name\": \"lecture added successfully\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get Lecture",
+			"request": {
+				"url": "localhost:5000/api/v1/lecture/2",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer TduGBw1AJtaJ00vZBmIfeClvUHIZHlOF1qy4T2e1Th",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"course_id\": 1,\n\t\"number\": 2,\n\t\"name\": \"lecture added successfully\"\n}"
 				},
 				"description": ""
 			},
