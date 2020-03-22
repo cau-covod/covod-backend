@@ -5,13 +5,13 @@ services:
     image: postgres
     restart: always
     env_file:
-      - .env.docker
+      - .env.staging
 
   covod:
     image: "${RELEASE_IMAGE}"
     restart: always
     entrypoint: sh ./admin/docker-start-dummy.sh
     env_file:
-      - .env.docker
+      - .env.staging
     ports:
       - "22044:5000"
