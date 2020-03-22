@@ -17,7 +17,7 @@ services:
     volumes:
       - media:/app/media
     ports:
-      - "localhost:22022:5000"
+      - "127.0.0.1:22022:5000"
 
 volumes:
   media:
