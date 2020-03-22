@@ -16,6 +16,8 @@ sqlalchemy-utils = "*"
 passlib = "*"
 flask-cloudy = "*"
 flask-cors = "*"
+opencv = "*"
+opencv-python = "*"
 
 [requires]
 python_version = "3"

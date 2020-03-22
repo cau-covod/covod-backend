@@ -9,6 +9,7 @@ from authlib.integrations.flask_oauth2 import current_token
 
 from covod.models.models import Timestamps, PDF, Lecture, Course, MediaType, Media, db
 from covod.oauth2 import require_oauth
+from covod.resources.thumbnails import generateThumbnails
 
 storage = Storage()
 
@@ -96,6 +97,10 @@ class LectureMedia(Resource):
         db.session.add(media)
         db.session.commit()
 
+        print("lecture.timestamps:", lecture.timestamps)
+        if lecture.timestamps:
+            generateThumbnails(lecture)
+
         return {'name': upload.name, 'extension': upload.extension, 'size': upload.size, 'url': upload.url}, 201, {}
 
 
@@ -161,5 +166,9 @@ class LectureTimestamps(Resource):
         timestamp = Timestamps(uuid=timestamp_uuid, json=timestamps_json, lecture=lecture)
         db.session.add(timestamp)
         db.session.commit()
+
+        print("lecture.media:", lecture.media)
+        if lecture.media:
+            generateThumbnails(lecture)
 
         return "Created", 201, {}
