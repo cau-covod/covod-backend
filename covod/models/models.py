@@ -17,7 +17,7 @@ db = SQLAlchemy()
 
 
 user_courses = db.Table("user_courses", db.Model.metadata,
-                        db.Column("user_id", db.ForeignKey("")),
+                        db.Column("user_id", db.ForeignKey("covod_user.id")),
                         db.Column("course_id", db.ForeignKey("course.id")),
                         )
 
