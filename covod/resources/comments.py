@@ -1,8 +1,9 @@
 from authlib.integrations.flask_oauth2 import current_token
-from flask_restful import Resource, fields, marshal_with, reqparse
+from flask_restful import Resource, fields, marshal_with, reqparse, abort
 from sqlalchemy import func
 
 from covod.models.models import User, Lecture, db, Comment
+from covod.oauth2 import require_oauth
 
 user_fields = {
     "id": fields.Integer,
@@ -25,15 +26,17 @@ comment_fields_recursive["replies"] = fields.List(fields.Nested(comment_fields_r
 
 
 class CommentsAPI(Resource):
+    @require_oauth("view")
     @marshal_with(comment_fields_recursive, envelope="comments")
     def get(self, lecture_id):
         return Comment.query.filter_by(lecture_id=lecture_id).filter(
             func.length(Comment.path) == Comment.get_n()).all()
 
+    @require_oauth("comment")
     @marshal_with(comment_fields_recursive, envelope="comments")
     def put(self, lecture_id):
         lecture = Lecture.query.filter_by(id=lecture_id).first_or_404()
-        user = User.query.filter_by(id=1).first()
+        user = User.query.filter_by(id=current_token.user_id).first()
 
         parser = reqparse.RequestParser()
         parser.add_argument("text", required=True, help="No comment text provided")
@@ -41,7 +44,12 @@ class CommentsAPI(Resource):
         parser.add_argument("timestamp", type=int)
         args = parser.parse_args()
 
-        comment = Comment(user=user, text=args.text, parent=args.parent,
+        parent = Comment.query.filter_by(id=args.parent).first()
+
+        if not parent:
+            abort(400)
+
+        comment = Comment(user=user, text=args.text, parent=parent,
                           timestamp=args.timestamp, lecture_id=lecture_id
                           )
 

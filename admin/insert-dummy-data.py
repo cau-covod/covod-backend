@@ -38,7 +38,7 @@ client_metadata = {
     "grant_types": "password",
     "redirect_uris": "",
     "response_types": "code",
-    "scope": "upload view",
+    "scope": "upload view comment",
     "token_endpoint_auth_method": "client_secret_post"
 }
 
