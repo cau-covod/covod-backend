@@ -2,11 +2,6 @@ FROM 183321040270.dkr.ecr.eu-central-1.amazonaws.com/covod-web-app:latest AS web
 
 FROM python:3.8
 
-RUN apt update && apt install -y \
-    libopencv-dev \
-    python3-opencv \
- && rm -rf /var/lib/apt/lists/*
-
 RUN pip install pipenv
 
 RUN mkdir /app
@@ -14,7 +9,7 @@ WORKDIR /app
 
 COPY Pipfile Pipfile
 COPY Pipfile.lock Pipfile.lock
-RUN pipenv install --system --site-packages
+RUN pipenv install --system --deploy
 
 RUN pipenv install gunicorn psycopg2
 
