@@ -12,7 +12,7 @@ class Configuration(metaclass=MetaFlaskEnv):
     ENV_LOAD_ALL = True
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path="/web-app")
 app.config.from_object(Configuration)
 CORS(app)
 
