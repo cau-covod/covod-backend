@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  db:
+    image: postgres
+    restart: always
+    env_file:
+      - .env.docker
+
+  covod:
+    image: "${RELEASE_IMAGE}"
+    restart: always
+    entrypoint: sh ./admin/docker-start-dummy.sh
+    env_file:
+      - .env.docker
+    ports:
+      - "22044:5000"

@@ -1,17 +1,36 @@
-image: "alpine:3.7"
+image:
+  name: "docker/compose:1.25.4"
+  entrypoint: ["/bin/sh", "-c"]
 stages:
+  - build
   - deploy
 
 variables:
+  TEST_IMAGE: 183321040270.dkr.ecr.eu-central-1.amazonaws.com/covod-backend:$CI_COMMIT_REF_NAME
   RELEASE_IMAGE: 183321040270.dkr.ecr.eu-central-1.amazonaws.com/covod-backend:latest
 
 before_script:
   - docker login -u AWS -p $REGISTRY_TOKEN 183321040270.dkr.ecr.eu-central-1.amazonaws.com
 
-deploy:
-  image:
-    name: docker/compose:1.24.1
-    entrypoint: ["/bin/sh", "-c"]
+build:
+  stage: build
+  script:
+    - docker build --pull -t $TEST_IMAGE -f admin/Dockerfile .
+    - docker push $TEST_IMAGE
+
+# Testing pipeline goes here
+
+staging:
+  stage: deploy
+  except:
+    refs:
+      - master
+  tags:
+    - deploy
+  script:
+    - docker-compose -f admin/docker-compose_staging.yml -p staging up -d
+
+production:
   stage: deploy
   only:
     refs:
@@ -19,6 +38,6 @@ deploy:
   tags:
     - deploy
   script:
-    - docker-compose build
-    - docker-compose up -d
-    - docker-compose push
+    - docker tag $TEST_IMAGE $RELEASE_IMAGE
+    - docker-compose -f admin/docker-compose_prod.yml -p production up -d
+    - docker push $RELEASE_IMAGE
