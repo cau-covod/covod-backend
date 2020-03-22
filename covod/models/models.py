@@ -42,7 +42,7 @@ class Media(db.Model):
     extension = db.Column(db.String(4), nullable=False)
     type = db.Column(Enum(MediaType), nullable=False)
     length = db.Column(db.Integer, default=1337)
-    thumbnail = db.Column(URLType)
+    thumbnail = db.Column(db.String(50))
     lecture_id = db.Column(db.Integer, db.ForeignKey("lecture.id", ondelete="CASCADE"))
     lecture = db.relationship("Lecture", back_populates="media", uselist=False)
 
@@ -88,8 +88,9 @@ class Comment(db.Model):
 class Lecture(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     number = db.Column(db.Integer, nullable=False)
-    pub_time = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     name = db.Column(db.String(80))
+    description = db.Column(db.Text)
     course_id = db.Column(db.Integer, db.ForeignKey("course.id"), nullable=False)
     media = db.relationship("Media", uselist=False, back_populates="lecture")
     pdf = db.relationship("PDF", uselist=False, back_populates="lecture")

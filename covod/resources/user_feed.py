@@ -6,13 +6,13 @@ from covod.oauth2 import require_oauth
 
 media_fields = {
     "length": fields.Integer,
-    "thumbnail": fields.Url
+    "thumbnail": fields.String
 }
 
 lecture_fields = {
     "id": fields.Integer,
     "number": fields.Integer,
-    "pub_time": fields.DateTime(dt_format="iso8601"),
+    "created_at": fields.DateTime(dt_format="iso8601"),
     "description": fields.String,
     "comment_count": fields.Integer,
     "media": fields.Nested(media_fields)
