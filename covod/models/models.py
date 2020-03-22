@@ -128,7 +128,7 @@ class Course(db.Model):
 
 
 class User(db.Model):
-    __tablename_ = "covod_user"
+    __tablename__ = "covod_user"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(40), unique=True)
