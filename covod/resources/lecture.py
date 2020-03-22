@@ -9,16 +9,18 @@ from authlib.integrations.flask_oauth2 import current_token
 
 from covod.models.models import Timestamps, PDF, Lecture, Course, MediaType, Media, db
 from covod.oauth2 import require_oauth
+from covod.resources.thumbnails import generateThumbnails
 
 storage = Storage()
 
 lecture = {
-        "id":fields.Integer,
-        "number":fields.Integer,
-        "pub_time":fields.DateTime(dt_format="iso8601"),
-        "name":fields.String,
-        "course_id":fields.Integer
+    "id": fields.Integer,
+    "number": fields.Integer,
+    "pub_time": fields.DateTime(dt_format="iso8601"),
+    "name": fields.String,
+    "course_id": fields.Integer
 }
+
 
 class LectureAPI(Resource):
     @require_oauth("upload")
@@ -33,18 +35,17 @@ class LectureAPI(Resource):
         course = Course.query.filter_by(id=args['course_id']).first_or_404()
         if not (current_token.user_id == course.user_id):
             return "Unauthorized", 401, {}
-        
+
         lecture = Lecture(number=args['number'], name=args['name'], course=course)
         db.session.add(lecture)
         db.session.commit()
-        
+
         return lecture, 201, {}
 
     @require_oauth("view")
     @marshal_with(lecture)
     def get(self, id):
         return Lecture.query.filter_by(id=id).first_or_404();
-
 
 
 class LectureMedia(Resource):
@@ -57,9 +58,9 @@ class LectureMedia(Resource):
         # print(url)
 
         lecture = Lecture.query.filter_by(id=id).first_or_404()
-        
+
         filename = "media/" + str(lecture.course.uuid) + "/" + str(lecture.media.uuid) + "." + lecture.media.extension
-        
+
         file = open(filename, "rb")
         response = Response(file.read())
         if lecture.media.extension == "mp3":
@@ -96,6 +97,10 @@ class LectureMedia(Resource):
         db.session.add(media)
         db.session.commit()
 
+        print("lecture.timestamps:", lecture.timestamps)
+        if lecture.timestamps:
+            generateThumbnails(lecture)
+
         return {'name': upload.name, 'extension': upload.extension, 'size': upload.size, 'url': upload.url}, 201, {}
 
 
@@ -109,14 +114,14 @@ class LecturePDF(Resource):
         # print(url)
 
         lecture = Lecture.query.filter_by(id=id).first_or_404()
-        
+
         filename = "media/" + str(lecture.course.uuid) + "/" + str(lecture.pdf.uuid) + ".pdf"
-        
+
         file = open(filename, "rb")
         response = Response(file.read())
         response.headers['content-type'] = 'application/pdf'
         return response
-    
+
     @require_oauth("upload")
     def post(self, id):
         lecture = Lecture.query.filter_by(id=id).first_or_404()
@@ -148,10 +153,10 @@ class LectureTimestamps(Resource):
     @require_oauth("upload")
     def post(self, id):
         lecture = Lecture.query.filter_by(id=id).first_or_404()
-        
+
         if not (current_token.user_id == lecture.course.user_id):
             return "Unauthorized", 401, {}
-        
+
         timestamp_uuid = uuid.uuid4()
         print(request.data)
         timestamps_json = request.data.decode("utf-8")
@@ -161,5 +166,9 @@ class LectureTimestamps(Resource):
         timestamp = Timestamps(uuid=timestamp_uuid, json=timestamps_json, lecture=lecture)
         db.session.add(timestamp)
         db.session.commit()
+
+        print("lecture.media:", lecture.media)
+        if lecture.media:
+            generateThumbnails(lecture)
 
         return "Created", 201, {}

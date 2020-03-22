@@ -16,6 +16,9 @@ sqlalchemy-utils = "*"
 passlib = "*"
 flask-cloudy = "*"
 flask-cors = "*"
+opencv-python-headless = "*"
+gunicorn = "*"
+psycopg2 = "*"
 
 [requires]
 python_version = "3"

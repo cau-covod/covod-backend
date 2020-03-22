@@ -6,7 +6,7 @@ services:
       - .env.docker
     image: postgres
     restart: always
-    
+
   covod:
     env_file:
       - .env.docker
