@@ -32,7 +32,7 @@ class Timestamps(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     uuid = db.Column(UUIDType(binary=False), unique=True, nullable=False)
     json = db.Column(JSONType())
-    lecture_id = db.Column(db.Integer, db.ForeignKey("lecture.id"))
+    lecture_id = db.Column(db.Integer, db.ForeignKey("lecture.id", ondelete="CASCADE"))
     lecture = db.relationship("Lecture", back_populates="timestamps", uselist=False)
 
 
@@ -41,14 +41,14 @@ class Media(db.Model):
     uuid = db.Column(UUIDType(binary=False), unique=True, nullable=False)
     extension = db.Column(db.String(4), nullable=False)
     type = db.Column(Enum(MediaType), nullable=False)
-    lecture_id = db.Column(db.Integer, db.ForeignKey("lecture.id"))
+    lecture_id = db.Column(db.Integer, db.ForeignKey("lecture.id", ondelete="CASCADE"))
     lecture = db.relationship("Lecture", back_populates="media", uselist=False)
 
 
 class PDF(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     uuid = db.Column(UUIDType(binary=False), unique=True, nullable=False)
-    lecture_id = db.Column(db.Integer, db.ForeignKey("lecture.id"))
+    lecture_id = db.Column(db.Integer, db.ForeignKey("lecture.id", ondelete="CASCADE"))
     lecture = db.relationship("Lecture", back_populates="pdf", uselist=False)
 
 
