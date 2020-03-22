@@ -8,11 +8,9 @@ db.create_all()
 print("Created tables")
 
 
-user = User(username="test", full_name="Test User", password="passwort")
+user = User(id=1, username="test", full_name="Test User", password="passwort")
 course = Course(name="Bleh", description="Blah blah", user_id=1)
 lecture = Lecture(number=1, name="Blu blu", course=course)
-
-course.add_user(user)
 
 client = OAuth2Client(
     user=user,
@@ -35,9 +33,13 @@ client_metadata = {
 client.set_client_metadata(client_metadata)
 
 db.session.add(user)
+db.session.commit()
+
+course.add_user(user)
+
 db.session.add(course)
 db.session.add(lecture)
 db.session.add(client)
-
 db.session.commit()
+
 print("Added dummy data to database!")
