@@ -28,6 +28,7 @@ staging:
   tags:
     - deploy
   script:
+    - docker pull $TEST_IMAGE
     - docker-compose -f admin/docker-compose_staging.yml -p staging up -d
 
 production:
