@@ -14,11 +14,11 @@ from covod.resources.thumbnails import generateThumbnails
 storage = Storage()
 
 lecture = {
-    "id": fields.Integer,
-    "number": fields.Integer,
-    "pub_time": fields.DateTime(dt_format="iso8601"),
-    "name": fields.String,
-    "course_id": fields.Integer
+    "id":fields.Integer,
+    "number":fields.Integer,
+    "created_at":fields.DateTime(dt_format="iso8601"),
+    "name":fields.String,
+    "course_id":fields.Integer
 }
 
 
