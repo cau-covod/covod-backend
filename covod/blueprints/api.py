@@ -5,7 +5,6 @@ from covod.resources.comments import CommentsAPI, CommentsFlatAPI
 from covod.resources.foo import Foo
 
 from covod.resources.lecture import LectureMedia, LecturePDF, LectureTimestamps, LectureAPI
-from covod.resources.thumbnails import LectureThumbnail, LectureThumbnails
 from covod.resources.user_feed import UserFeed
 
 bp = Blueprint("api", __name__, url_prefix="/api/v1")
