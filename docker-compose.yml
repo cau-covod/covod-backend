@@ -12,6 +12,6 @@ services:
       - .env.docker
     restart: always
     build: .
-    image: "$(RELEASE_IMAGE)"
+    image: "${RELEASE_IMAGE}"
     ports:
       - "22022:5000"
