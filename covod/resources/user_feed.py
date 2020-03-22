@@ -32,7 +32,7 @@ feed_fields = {
 
 class UserFeed(Resource):
     @require_oauth("view")
-    @marshal_with(feed_fields, envelope="feed")
+    @marshal_with(feed_fields)
     def get(self):
         user = User.query.filter_by(id=current_token.user_id).first_or_404()
         feed = user.query.join(Course, User.courses).join(Lecture).all()
