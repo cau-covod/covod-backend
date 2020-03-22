@@ -1,14 +1,21 @@
 from authlib.integrations.flask_oauth2 import current_token
 from flask_restful import Resource, fields, marshal_with
 
-from covod.models.models import User, Lecture, Course
+from covod.models.models import User, Lecture, Course, Media
 from covod.oauth2 import require_oauth
+
+media_fields = {
+    "length": fields.Integer,
+    "thumbnail": fields.Url
+}
 
 lecture_fields = {
     "id": fields.Integer,
     "number": fields.Integer,
     "pub_time": fields.DateTime(dt_format="iso8601"),
-    "description": fields.String
+    "description": fields.String,
+    "comment_count": fields.Integer,
+    "media": fields.Nested(media_fields)
 }
 
 course_fields = {

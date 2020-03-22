@@ -5,7 +5,7 @@ from datetime import datetime
 
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Enum
-from sqlalchemy_utils import UUIDType
+from sqlalchemy_utils import UUIDType, aggregated, URLType
 from sqlalchemy_utils.types.password import PasswordType
 from sqlalchemy_utils.types.json import JSONType
 from authlib.integrations.sqla_oauth2 import (
@@ -41,6 +41,8 @@ class Media(db.Model):
     uuid = db.Column(UUIDType(binary=False), unique=True, nullable=False)
     extension = db.Column(db.String(4), nullable=False)
     type = db.Column(Enum(MediaType), nullable=False)
+    length = db.Column(db.Integer, default=1337)
+    thumbnail = db.Column(URLType)
     lecture_id = db.Column(db.Integer, db.ForeignKey("lecture.id", ondelete="CASCADE"))
     lecture = db.relationship("Lecture", back_populates="media", uselist=False)
 
@@ -93,6 +95,10 @@ class Lecture(db.Model):
     pdf = db.relationship("PDF", uselist=False, back_populates="lecture")
     timestamps = db.relationship("Timestamps", uselist=False, back_populates="lecture")
     comments = db.relationship("Comment")
+
+    @aggregated("comments", db.Column(db.Integer))
+    def comment_count(self):
+        return db.func.count("1")
 
     def __str__(self):
         return str(self.number)
