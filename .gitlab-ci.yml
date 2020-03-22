@@ -2,6 +2,12 @@ image: "alpine:3.7"
 stages:
   - deploy
 
+variables:
+  RELEASE_IMAGE: 183321040270.dkr.ecr.eu-central-1.amazonaws.com/covod/covod-backend:latest
+
+before_script:
+  - docker login -u AWS -p $REGISTRY_TOKEN 183321040270.dkr.ecr.eu-central-1.amazonaws.com/covod
+
 deploy:
   image:
     name: docker/compose:1.24.1
