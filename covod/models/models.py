@@ -53,23 +53,23 @@ class PDF(db.Model):
 
 
 class Comment(db.Model):
-    @staticmethod
-    def get_n():
-        return 6
-
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     modified_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     timestamp = db.Column(db.Integer)
-    text = db.Column(db.Text)
+    text = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     user = db.relationship("User")
     path = db.Column(db.Text, index=True)
     parent_id = db.Column(db.Integer, db.ForeignKey("comment.id"))
-    lecture_id = db.Column(db.Integer, db.ForeignKey("lecture.id"))
+    lecture_id = db.Column(db.Integer, db.ForeignKey("lecture.id", ondelete="CASCADE"))
     replies = db.relationship(
         "Comment", backref=db.backref("parent", remote_side=[id]),
         lazy="dynamic")
+
+    @staticmethod
+    def get_n():
+        return 6
 
     def save(self):
         db.session.add(self)
@@ -96,6 +96,9 @@ class Lecture(db.Model):
 
     def __str__(self):
         return str(self.number)
+
+    def add_comment(self, comment):
+        self.comments.append(comment)
 
 
 class Course(db.Model):
