@@ -16,7 +16,6 @@ sqlalchemy-utils = "*"
 passlib = "*"
 flask-cloudy = "*"
 flask-cors = "*"
-cv2 = "*"
 
 [requires]
 python_version = "3"
