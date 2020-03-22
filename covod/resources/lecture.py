@@ -49,7 +49,7 @@ class LectureAPI(Resource):
 
 
 class LectureMedia(Resource):
-    @require_oauth("view")
+    #@require_oauth("view")
     def get(self, id):
         # TODO: use cloudy storage with S3
         # obj = storage.get(str(id)+".mp3")
