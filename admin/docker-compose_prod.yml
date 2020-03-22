@@ -1,0 +1,24 @@
+version: "3"
+
+services:
+  db:
+    image: postgres
+    restart: always
+    env_file:
+      - .env.docker
+    volumes:
+      - db:/var/lib/postgresql/data
+
+  covod:
+    image: "${TEST_IMAGE}"
+    restart: always
+    env_file:
+      - .env.docker
+    volumes:
+      - media:/app/media
+    ports:
+      - "localhost:22022:5000"
+
+volumes:
+  media:
+  db:

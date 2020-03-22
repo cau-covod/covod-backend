@@ -1,0 +1,10 @@
+admin/docker-compose*
+admin/.env.docker
+admin/Dockerfile
+.dockerignore
+.editorconfig
+.env.example
+.gitignore
+.gitlab-ci.yml
+covod.postman_collection.json
+README.md
