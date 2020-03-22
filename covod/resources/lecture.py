@@ -1,7 +1,7 @@
 import uuid, fnmatch, json
 
 from flask import request, Response
-from flask_restful import Resource, reqparse
+from flask_restful import Resource, reqparse, fields, marshal_with
 from flask_restful.reqparse import RequestParser
 from flask_cloudy import Storage
 
@@ -12,23 +12,40 @@ from covod.oauth2 import require_oauth
 
 storage = Storage()
 
+lecture = {
+        "id":fields.Integer,
+        "number":fields.Integer,
+        "pub_time":fields.DateTime(dt_format="iso8601"),
+        "name":fields.String,
+        "course_id":fields.Integer
+}
+
 class LectureAPI(Resource):
     @require_oauth("upload")
-    def put(self):
+    @marshal_with(lecture)
+    def put(self, id=0):
         parser = reqparse.RequestParser()
-        parser.add_argument('courseid', type=int)
+        parser.add_argument('course_id', type=int)
         parser.add_argument('number', type=int)
         parser.add_argument('name', type=str)
         args = parser.parse_args()
 
-        course = Course.query.filter_by(id=args['courseid']).first_or_404()
+        course = Course.query.filter_by(id=args['course_id']).first_or_404()
         if not (current_token.user_id == course.user_id):
             return "Unauthorized", 401, {}
         
         lecture = Lecture(number=args['number'], name=args['name'], course=course)
         db.session.add(lecture)
         db.session.commit()
-        return "Created", 201, {}
+        
+        return lecture, 201, {}
+
+    @require_oauth("view")
+    @marshal_with(lecture)
+    def get(self, id):
+        return Lecture.query.filter_by(id=id).first_or_404();
+
+
 
 class LectureMedia(Resource):
     @require_oauth("view")

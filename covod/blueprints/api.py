@@ -11,7 +11,7 @@ api = Api(bp)
 
 api.add_resource(Foo, "/foo", "/foo/<string:id>")
 
-api.add_resource(LectureAPI, "/lecture")
+api.add_resource(LectureAPI, "/lecture/<int:id>")
 api.add_resource(LectureMedia, "/lecture/<int:id>/media")
 api.add_resource(LecturePDF, "/lecture/<int:id>/pdf")
 api.add_resource(LectureTimestamps, "/lecture/<int:id>/timestamps")
