@@ -4,6 +4,7 @@ from flask_restful import Api
 from covod.resources.comments import CommentsAPI, CommentsFlatAPI
 from covod.resources.foo import Foo
 
+from covod.resources.course import CourseAPI
 from covod.resources.lecture import LectureMedia, LecturePDF, LectureTimestamps, LectureAPI
 from covod.resources.thumbnails import LectureThumbnail, LectureThumbnails
 from covod.resources.user_feed import UserFeed
@@ -13,6 +14,7 @@ api = Api(bp)
 
 api.add_resource(Foo, "/foo", "/foo/<string:id>")
 
+api.add_resource(CourseAPI, "/courses")
 api.add_resource(LectureAPI, "/lecture/<int:id>")
 api.add_resource(LectureMedia, "/lecture/<int:id>/media")
 api.add_resource(LecturePDF, "/lecture/<int:id>/pdf")
