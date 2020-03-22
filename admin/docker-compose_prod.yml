@@ -10,7 +10,7 @@ services:
       - db:/var/lib/postgresql/data
 
   covod:
-    image: "${TEST_IMAGE}"
+    image: "${$RELEASE_IMAGE}"
     restart: always
     env_file:
       - .env.docker
