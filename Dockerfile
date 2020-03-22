@@ -7,7 +7,7 @@ RUN apt update && apt install -y \
     python3-opencv \
  && rm -rf /var/lib/apt/lists/*
 
-RUN pipenv install gunicorn psycopg2
+RUN pipenv install --site-packages gunicorn psycopg2
 
 WORKDIR /app
 COPY --from=web-app /usr/share/nginx/html web-app
