@@ -4,7 +4,7 @@ from flask_cors import CORS
 
 from covod.models.models import db
 from covod.oauth2 import setup_oauth
-from covod.blueprints import api, oauth2
+from covod.blueprints import api, oauth2, web_app
 from covod.resources.lecture import storage
 
 
@@ -18,6 +18,7 @@ CORS(app)
 
 app.register_blueprint(api.bp)
 app.register_blueprint(oauth2.bp)
+app.register_blueprint(web_app.bp)
 
 
 @app.cli.command("insert-dummy-data")
