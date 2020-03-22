@@ -17,7 +17,7 @@ db = SQLAlchemy()
 
 
 user_courses = db.Table("user_courses", db.Model.metadata,
-                        db.Column("user_id", db.ForeignKey("user.id")),
+                        db.Column("user_id", db.ForeignKey("")),
                         db.Column("course_id", db.ForeignKey("course.id")),
                         )
 
@@ -60,7 +60,7 @@ class Comment(db.Model):
     modified_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     timestamp = db.Column(db.Integer)
     text = db.Column(db.Text, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("covod_user.id"))
     user = db.relationship("User")
     path = db.Column(db.Text, index=True)
     parent_id = db.Column(db.Integer, db.ForeignKey("comment.id"))
@@ -113,7 +113,7 @@ class Course(db.Model):
     uuid = db.Column(UUIDType(binary=False), unique=True, nullable=False, default=uuid.uuid4())
     name = db.Column(db.String(80), nullable=False)
     description = db.Column(db.Text, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("covod_user.id"))
     lectures = db.relationship("Lecture", backref="course")
     users = db.relationship("User", secondary=user_courses, back_populates="courses")
 
@@ -153,7 +153,7 @@ class OAuth2Client(db.Model, OAuth2ClientMixin):
     __tablename__ = "oauth2_client"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id", ondelete="CASCADE"))
+    user_id = db.Column(db.Integer, db.ForeignKey("covod_user.id", ondelete="CASCADE"))
     user = db.relationship("User")
 
 
@@ -161,7 +161,7 @@ class OAuth2Token(db.Model, OAuth2TokenMixin):
     __tablename__ = "oauth2_token"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id", ondelete="CASCADE"))
+    user_id = db.Column(db.Integer, db.ForeignKey("covod_user.id", ondelete="CASCADE"))
     user = db.relationship("User")
 
     def is_refresh_token_active(self):
