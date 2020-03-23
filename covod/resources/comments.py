@@ -44,10 +44,13 @@ class CommentsAPI(Resource):
         parser.add_argument("timestamp", type=int)
         args = parser.parse_args()
 
-        parent = Comment.query.filter_by(id=args.parent).first()
+        if args.parent:
+            parent = Comment.query.filter_by(id=args.parent).first()
 
-        if not parent:
-            abort(400)
+            if not parent:
+                abort(400)
+        else:
+            parent = None
 
         comment = Comment(user=user, text=args.text, parent=parent,
                           timestamp=args.timestamp, lecture_id=lecture_id
