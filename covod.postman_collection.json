@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "10e610f8-9117-4b37-9ec3-fa12208784d4",
+		"_postman_id": "de938b8e-c6f9-47a7-8bfd-1ec22d15e015",
 		"name": "covod",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -45,7 +45,7 @@
 						}
 					]
 				},
-				"url": "http://covod.bre4k3r.de:22022/oauth2/token"
+				"url": "{{URL}}/oauth2/token"
 			},
 			"response": []
 		},
@@ -59,7 +59,7 @@
 						"value": "bearer sCzfmbJeS9sI7L7EG0KINpuKZA7SZwhg6m26nJyhSa"
 					}
 				],
-				"url": "localhost:5000/oauth2/check_token"
+				"url": "{{URL}}/oauth2/check_token"
 			},
 			"response": []
 		},
@@ -83,7 +83,7 @@
 						}
 					]
 				},
-				"url": "localhost:5000/api/v1/lecture/1/media"
+				"url": "{{URL}}/api/v1/lecture/1/media"
 			},
 			"response": []
 		},
@@ -107,7 +107,7 @@
 						}
 					]
 				},
-				"url": "localhost:5000/api/lecture/1/pdf"
+				"url": "{{URL}}/api/v1/lecture/1/pdf"
 			},
 			"response": []
 		},
@@ -129,7 +129,7 @@
 					"mode": "raw",
 					"raw": "{\"test\":\"still successful\"}"
 				},
-				"url": "localhost:5000/api/v1/lecture/1/timestamps"
+				"url": "{{URL}}/api/v1/lecture/1/timestamps"
 			},
 			"response": []
 		},
@@ -143,7 +143,7 @@
 						"value": "bearer EExm0hT4ulRASf8GSV3628n1qukB8VwXF8pmI5iPDS"
 					}
 				],
-				"url": "localhost:5000/api/v1/lecture/1/media"
+				"url": "{{URL}}/api/v1/lecture/1/media"
 			},
 			"response": []
 		},
@@ -157,7 +157,7 @@
 						"value": "bearer d3cGCb3bC0VIVieDzFFPNbmyq54ue8vOFUX7dhPOOi"
 					}
 				],
-				"url": "localhost:5000/api/lecture/1/pdf"
+				"url": "{{URL}}/api/v1/lecture/1/pdf"
 			},
 			"response": []
 		},
@@ -171,7 +171,7 @@
 						"value": "bearer f5xpIvFDH4eEoIZ0FxisgliJsIM47hbNxnrHYG1PSK"
 					}
 				],
-				"url": "localhost:5000/api/v1/lecture/1/timestamps"
+				"url": "{{URL}}/api/v1/lecture/1/timestamps"
 			},
 			"response": []
 		},
@@ -193,7 +193,7 @@
 					"mode": "raw",
 					"raw": "{\n\t\"courseid\": 1,\n\t\"number\": 2,\n\t\"name\": \"lecture added successfully\"\n}"
 				},
-				"url": "localhost:5000/api/v1/lecture"
+				"url": "{{URL}}/api/v1/lecture"
 			},
 			"response": []
 		},
@@ -209,7 +209,7 @@
 				},
 				"method": "GET",
 				"header": [],
-				"url": "http://covod.bre4k3r.de:22022/api/v1/user/feed"
+				"url": "{{URL}}/api/v1/user/feed"
 			},
 			"response": []
 		},
@@ -232,7 +232,7 @@
 					"mode": "formdata",
 					"formdata": []
 				},
-				"url": "http://covod.bre4k3r.de:22022/api/v1/lecture/1/comments"
+				"url": "{{URL}}/api/v1/lecture/1/comments"
 			},
 			"response": []
 		},
@@ -241,7 +241,7 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "http://covod.bre4k3r.de:22022/api/v1/lecture/1/comments-flat"
+				"url": "{{URL}}/api/v1/lecture/1/comments-flat"
 			},
 			"response": []
 		},
@@ -280,7 +280,23 @@
 						}
 					]
 				},
-				"url": "http://covod.bre4k3r.de:22022/api/v1/lecture/1/comments"
+				"url": "{{URL}}/api/v1/lecture/1/comments"
+			},
+			"response": []
+		},
+		{
+			"name": "Download thumbnails",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": {
+						"addTokenTo": "header",
+						"accessToken": "OZxy90LXCeSkDKVaomhdIXIEYOm7hE3czrfG9ZkqwT"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "{{URL}}/api/v1/lecture/1/thumbnails"
 			},
 			"response": []
 		}
